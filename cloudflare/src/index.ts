@@ -33,12 +33,14 @@ export default {
 
     // Health can be probed with API key (same as other routes) —
     // keeps the surface consistent with a public Worker URL.
-    if (path === '/health' || path === '/reply' || path === '/send' || path === '/send-media') {
+    if (
+      path === '/health' ||
+      path === '/reply' ||
+      path === '/send' ||
+      path === '/send-media' ||
+      path === '/internal/ensure'
+    ) {
       if (!checkApiKey(request, env)) return unauthorized();
-      // Ensure DO is awake before serving API (especially after cold start)
-      if (path !== '/health') {
-        // no-op ensure on mutating routes happens inside DO as needed
-      }
       return bridgeStub(env).fetch(
         new Request(new URL(path, 'https://do.internal'), {
           method: request.method,

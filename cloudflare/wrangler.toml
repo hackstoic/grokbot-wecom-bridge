@@ -1,5 +1,5 @@
 # Template — replace placeholders; do NOT commit real account/IDs/secrets.
-name = "grokbot-wecom-bridge"
+name = "grokbot-wecom-bridge-chanyan"
 main = "src/index.ts"
 compatibility_date = "2025-10-01"
 compatibility_flags = ["nodejs_compat"]
