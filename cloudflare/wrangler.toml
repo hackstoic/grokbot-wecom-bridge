@@ -1,0 +1,38 @@
+# Template — replace placeholders; do NOT commit real account/IDs/secrets.
+name = "grokbot-wecom-bridge"
+main = "src/index.ts"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Workers Paid required for Durable Objects.
+# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+
+[vars]
+# Non-secret knobs (override per environment as needed)
+PLACEHOLDER = "收到，正在处理…"
+# HEARTBEAT_MS / STREAM_TTL_MS / WATCHDOG_STALE_MS can be set as vars if desired
+
+[[durable_objects.bindings]]
+name = "BRIDGE"
+class_name = "WeComBridgeDO"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["WeComBridgeDO"]
+
+# Cron wakes the DO so the outbound WS can be re-established after eviction/deploy.
+[triggers]
+crons = ["*/2 * * * *"]
+
+# Secrets (set via `wrangler secret put`, never in this file):
+#   WECOM_BOT_ID
+#   WECOM_BOT_SECRET
+#   FORWARD_KEY
+#   API_KEY
+#   WEBHOOK_URL
+#
+# Multi-bot: deploy one Worker (or wrangler environment) per Bot.
+# Example:
+#   wrangler deploy --env yunying
+#   wrangler secret put WECOM_BOT_ID --env yunying
+# Each environment keeps its own DO class instance and secrets.

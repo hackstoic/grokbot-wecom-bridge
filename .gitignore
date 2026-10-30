@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+*.env
+*.env.*
+!.env.example
+*.log
+*.pid
+*.bak*
+inbox.jsonl
+.DS_Store
+*.tgz
+.mf/
+# keep package-lock.json; ignore other locks/pids
+npm-debug.log*
+yarn-error.log*
